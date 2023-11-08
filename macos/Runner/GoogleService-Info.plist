@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>217519489759-4o7nbrbtmdusqvoomt776aj4i84g24vn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.217519489759-4o7nbrbtmdusqvoomt776aj4i84g24vn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>217519489759-dmu713fb3ujro1h2ad6umrk31n9bvug9.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBhGd9QHp3aTrP8oXQfHmhLnnP3k-11U5w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>217519489759</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.flutterApplication1.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>schoolapp-c2f68</string>
+	<key>STORAGE_BUCKET</key>
+	<string>schoolapp-c2f68.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:217519489759:ios:f0a6614d7edddaf24b1f6a</string>
+	<key>DATABASE_URL</key>
+	<string>https://schoolapp-c2f68-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

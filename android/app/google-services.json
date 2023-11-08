@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "217519489759",
+    "firebase_url": "https://schoolapp-c2f68-default-rtdb.firebaseio.com",
+    "project_id": "schoolapp-c2f68",
+    "storage_bucket": "schoolapp-c2f68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217519489759:android:12fbc0e34cebd81b4b1f6a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217519489759-ook6f585lqlbkkksnvb9jolkfmq00irj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq7DurJoLYb17Ol5noCoGBoGDP2iqn8Tg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217519489759-99ms70ni3nsqh0lkvlui1rhipdr2b4tv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "217519489759-07k55pp7df9vmkmnm6id19kbbcuvqstc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fullter.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217519489759:android:2fa3b3eaed2f0d854b1f6a",
+        "android_client_info": {
+          "package_name": "com.example.fullter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217519489759-dmu713fb3ujro1h2ad6umrk31n9bvug9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fullter",
+            "certificate_hash": "93ead97087e15f7cfef53d0520b05ccd18676275"
+          }
+        },
+        {
+          "client_id": "217519489759-ook6f585lqlbkkksnvb9jolkfmq00irj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq7DurJoLYb17Ol5noCoGBoGDP2iqn8Tg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217519489759-99ms70ni3nsqh0lkvlui1rhipdr2b4tv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "217519489759-07k55pp7df9vmkmnm6id19kbbcuvqstc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fullter.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
