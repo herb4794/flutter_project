@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/consts/consts.dart';
+import 'package:flutter_application_1/controllers/fireCloud.dart';
 import 'package:flutter_application_1/views/home_screen/home.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -51,19 +53,20 @@ class AuthController extends GetxController {
         idToken: googleAuth.idToken,
       );
       await auth.signInWithCredential(credential);
+      var userResult = await auth.signInWithCredential(credential);
+      FireCloud().storingUserData(
+          name: userResult.user!.displayName,
+          email: userResult.user!.email,
+          password: "google",
+          imageUrl: userResult.user!.photoURL);
+      print("---------------------Google User--------------------------------");
+      print(userResult.user!.uid);
       Get.to(() => const Home());
     } catch (e) {
       print("Error Google is False" + e.toString());
     }
   }
 
-//  storing data method
-  storingUserData({name, password, email}) async {
-    DocumentReference store =
-        firestore.collection(usersCollection).doc(currentUser!.uid);
-    store.set(
-        {'name': name, 'password': password, 'email': email, 'imageUrl': ''});
-  }
 
   void signoutMethod(context) async {
     Stream<User?> idTokenStream = auth.idTokenChanges();
