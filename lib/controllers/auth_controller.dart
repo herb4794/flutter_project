@@ -57,7 +57,7 @@ class AuthController extends GetxController {
       FireCloud().storingUserData(
           name: userResult.user!.displayName,
           email: userResult.user!.email,
-          password: "google",
+          method: "google",
           imageUrl: userResult.user!.photoURL);
       print("---------------------Google User--------------------------------");
       print(userResult.user!.uid);
@@ -75,14 +75,6 @@ class AuthController extends GetxController {
       if (user == null) {
         print("User signed out");
       }
-    });
-    Future.delayed(Duration(seconds: 5), () {
-      auth.signOut();
-    });
-
-    Future.delayed(Duration(seconds: 10), () {
-      idTokenSubscription.cancel();
-      print("ID token listener subscription canceled");
     });
     try {
       await auth.signOut();

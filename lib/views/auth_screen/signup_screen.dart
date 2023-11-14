@@ -121,7 +121,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           .then((value) {
                             return fireCloud.storingUserData(
                               email: emailController.text,
-                              password: passwordController.text,
+                              method: 'local',
                               name: nameController.text,
                               imageUrl: " ",
                             );
