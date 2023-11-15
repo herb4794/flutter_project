@@ -6,13 +6,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/controllers/fireCloud.dart';
+import 'package:flutter_application_1/views/auth_screen/login_screen.dart';
 import 'package:flutter_application_1/views/home_screen/home.dart';
+import 'package:flutter_application_1/views/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var userNameController = TextEditingController();
   User? currentUser;
 //   login method
 
@@ -68,16 +71,29 @@ class AuthController extends GetxController {
   }
 
 
-  void signoutMethod(context) async {
-    Stream<User?> idTokenStream = auth.idTokenChanges();
-    StreamSubscription<User?> idTokenSubscription =
-        idTokenStream.listen((user) {
-      if (user == null) {
-        print("User signed out");
+  void updateLocalUserEmailAndPassword ({context}) {
+    auth.authStateChanges().listen((user) async {
+      if(user != null){
+        final docRef = await firestore.collection(usersCollection).doc(user.uid);
+        if(passwordController.text != ""){
+          user?.updatePassword(passwordController.text);
+        }
+        docRef.update({"name" : userNameController.text}).then(
+                (value) => print("update successful"),
+            onError: (e) => print("Error updating document $e"));
+        Get.to(() => Home());
+        VxToast.show(context, msg: "Change is successful");
+      }else{
+        VxToast.show(context, msg: "Something Error");
+        Get.to(() => LoginScreen());
       }
     });
+  }
+
+  void signoutMethod(context) async {
     try {
       await auth.signOut();
+      print("=================================SignOut!!!=======================================");
       print("signOut Done");
     } catch (e) {
       VxToast.show(context, msg: e.toString() + "----------Error!!!!!");

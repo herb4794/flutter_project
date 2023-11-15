@@ -7,14 +7,10 @@ import 'package:flutter_application_1/widgets_common/our_button.dart';
 class ItemDetails extends StatelessWidget {
   final String? title;
   final int? price;
- 
+
   const ItemDetails({Key? key, required this.title, required this.price}) : super(key: key);
 
-  getPrice() {
-    debugPrint(price.toString());
-    debugPrint(title.toString());
-    return price;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +261,6 @@ class ItemDetails extends StatelessWidget {
             child: ourButton(
                 color: redColor,
                 onPress: () {
-                getPrice();
               },
                 textColor: whiteColor,
                 title: "Add to cart"),

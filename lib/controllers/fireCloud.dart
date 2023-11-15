@@ -28,14 +28,7 @@ class FireCloud extends GetxController {
     });
   }
 
-  Future getStroageImage ({email , uid}) async {
-    final ref = FirebaseStorage.instance.ref();
-    final data = ref.child('${email}/scaled_hey_icon.jpg');
-    final imageList = await data.getDownloadURL();
-  }
-
   storingUserData({name, method, email, imageUrl}) async {
-
     if(currentUser != null){
       DocumentReference store =
       firestore.collection(usersCollection).doc(currentUser!.uid);
@@ -44,6 +37,17 @@ class FireCloud extends GetxController {
     }
   }
 
-  // cart get data method
+  addCart({product}){
+    auth.authStateChanges().listen((user) async {
+      if(user != null){
+        final docRef = await firestore.collection(usersCollection).doc(user.uid);
+        docRef.update({"orders" : product}).then(
+                (value) => print("Add Cart"),
+            onError: (e) => print("Add Cart Error $e"));
+      }
+    });
+  }
+
+// cart get data method
 }
 

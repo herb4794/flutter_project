@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
+import 'package:flutter_application_1/controllers/auth_controller.dart';
 import 'package:flutter_application_1/controllers/fireCloud.dart';
 import 'package:flutter_application_1/controllers/profile_controller.dart';
 import 'package:flutter_application_1/widgets_common/bg_widget.dart';
@@ -18,6 +19,7 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   var controller = Get.find<ProfileController>();
+  var authController = Get.put(AuthController());
   Map? existObj = {
     "name" : "",
     "email" : "",
@@ -78,18 +80,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               customTextField(
                 hint: existObj!['name'].toString(),
                 title: name,
-                isPass: false
+                isPass: false,
+                controller: authController.userNameController
               ),
               customTextField(
                 hint: password,
                 title: password,
-                isPass: true
+                isPass: true,
+                controller: authController.passwordController
               ),
               20.heightBox,
               SizedBox(
                 width: context.screenWidth - 60,
                   child: ourButton(color: redColor,onPress: (){
-                    FireCloud().getStroageImage(email : existObj!['email']);
+                    authController.updateLocalUserEmailAndPassword(context: context);
                   }, textColor: whiteColor, title: "Edit"))
             ],
           ).box.white.shadowSm.

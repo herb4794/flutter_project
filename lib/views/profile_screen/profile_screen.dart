@@ -34,7 +34,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     auth.authStateChanges().listen((User? user)async {
       if (user != null)  {
         var existUser = await firestore.collection(usersCollection).doc(user.uid).get();
@@ -45,7 +44,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           existObj?['method'] = existUserData!['method'].toString();
           existObj?['ImageUrl'] = existUserData!['imageUrl'].toString();
           controller = Get.put(ProfileController());
-          print(existObj);
         });
       }
     });
@@ -123,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: whiteColor,
                               )),
                           onPressed: () async {
-                            AuthController().signoutMethod(context);
+                            // AuthController().signoutMethod(context);
                             Get.offAll(() => const LoginScreen());
                           },
                           child: "Logout".text.fontFamily(semibold).white.make())
