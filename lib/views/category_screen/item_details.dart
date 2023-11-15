@@ -2,14 +2,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/consts/lists.dart';
+import 'package:flutter_application_1/controllers/home_controller.dart';
+import 'package:flutter_application_1/views/cart_screen/cart_screen.dart';
 import 'package:flutter_application_1/widgets_common/our_button.dart';
+import 'package:flutter_application_1/controllers/cartController.dart';
+import 'package:get/get.dart';
 
-class ItemDetails extends StatelessWidget {
-  final String? title;
-  final int? price;
+class ItemDetails extends StatefulWidget {
+   String? title;
+   String? price;
+   List<String>? product;
 
-  const ItemDetails({Key? key, required this.title, required this.price}) : super(key: key);
+  ItemDetails({Key? key, required this.title, required this.price}) : super(key: key);
 
+  @override
+  State<ItemDetails> createState() => _ItemDetailsState();
+}
+
+class _ItemDetailsState extends State<ItemDetails> {
+  var title;
+  var price;
+  var cartController = CartController();
+  List<String>? product;
+
+
+  @override
+  void initState() {
+    setState(() {
+      title = widget.title;
+      price = widget.price;
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
 
   @override
@@ -18,7 +43,7 @@ class ItemDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: lightGrey,
       appBar: AppBar(
-        title: title!.text.color(darkFontGrey).fontFamily(bold).make(),
+        title: widget.title!.text.color(darkFontGrey).fontFamily(bold).make(),
         actions: [
           IconButton(
               onPressed: () {},
@@ -52,7 +77,7 @@ class ItemDetails extends StatelessWidget {
 
                 10.heightBox,
                 //  title and details section
-                title!.text
+                widget.title!.text
                     .size(16)
                     .color(darkFontGrey)
                     .fontFamily(semibold)
@@ -70,7 +95,7 @@ class ItemDetails extends StatelessWidget {
 
                 10.heightBox,
                 Text(
-                  "\$${price?.toString()}",
+                  "\$${widget.price?.toString()}",
                   style: TextStyle(
                       color: redColor,
                       fontFamily: bold,
@@ -245,9 +270,7 @@ class ItemDetails extends StatelessWidget {
                                     .make(),
                               ],
                             )
-                                .box
-                                .white
-                                .margin(
+                                .box .white .margin(
                                     const EdgeInsets.symmetric(horizontal: 4))
                                 .roundedSM
                                 .padding(const EdgeInsets.all(8))
@@ -260,7 +283,9 @@ class ItemDetails extends StatelessWidget {
             height: 60,
             child: ourButton(
                 color: redColor,
-                onPress: () {
+                onPress: () async {
+                 cartController.setNewArr([title,price]);
+                 cartController.addCart();
               },
                 textColor: whiteColor,
                 title: "Add to cart"),

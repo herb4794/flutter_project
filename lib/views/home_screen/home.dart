@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
+import 'package:flutter_application_1/controllers/cartController.dart';
 import 'package:flutter_application_1/controllers/home_controller.dart';
 import 'package:flutter_application_1/views/cart_screen/cart_screen.dart';
 import 'package:flutter_application_1/views/category_screen/category_screen.dart';

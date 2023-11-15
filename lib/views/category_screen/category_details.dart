@@ -91,7 +91,7 @@ class CategoryDetails extends StatelessWidget {
                           .padding(const EdgeInsets.all(12))
                           .make()
                           .onTap(() {
-                        Get.to(() => ItemDetails(title: title, price: 333,));
+                        Get.to(() => ItemDetails(title: title, price: "333",));
                       });
                     }))
           ],
