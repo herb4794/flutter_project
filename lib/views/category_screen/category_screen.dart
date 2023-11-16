@@ -17,10 +17,11 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+
   Future<Map<String, dynamic>> categoryFuture() async {
     final res =
         await http.get(Uri.parse('https://dummyjson.com/products?limit=10'));
-    final result = await res.body;
+    final result = res.body;
     if (result.isNotEmpty) {
       return json.decode(result);
     } else {
