@@ -65,7 +65,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 if (products.isNotEmpty) {
                                   final productsList =
                                       products[index] as Map<String, dynamic>;
-                                  print(productsList);
                                   if (productsList.containsKey('category') &&
                                       productsList.containsKey('thumbnail')) {
                                     var images =

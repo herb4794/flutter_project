@@ -5,22 +5,24 @@ class CartController extends GetxController {
   List<String> newArr =  [];
   List<String> cartValue = [];
 
+  RxList<Map<String, dynamic>> getCartItemResult = <Map<String, dynamic>>[].obs;
+
   void setNewArr (List<String>Value){
     newArr.addAll(Value);
     setCart(newArr);
   }
 
-  // TODO LocalStorage
+  // TODO LocalStorage init
   void setCart (newArr) async {
     SharedPreferences setCart = await SharedPreferences.getInstance();
-        setCart.setStringList("product",newArr);
+    setCart.setStringList("product",newArr);
   }
 
   List<String> getCartItem ()  {
     return cartValue;
   }
 
-  // TODO LocalStorage
+  // TODO LocalStorage setter
   Future addCart () async {
     SharedPreferences getCart = await SharedPreferences.getInstance();
     try{

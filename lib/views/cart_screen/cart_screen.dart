@@ -14,22 +14,24 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final controller = CartController();
+  // final cartController = Get.find();
+  final cartControllerGetx = Get.put(CartController());
   List<Map<String, dynamic>>? productMapList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller.addCart().then((value){
-      setState(() {
-        for(int i = 0; i < controller.cartValue.length; i += 2){
-          productMapList?.add({
-            'title': controller.cartValue[i],
-            'price': controller.cartValue[i+1],
-          });
-        }
-      });
-    });
+    // controller.addCart().then((value){
+    //   setState(() {
+    //     for(int i = 0; i < controller.cartValue.length; i += 2){
+    //       productMapList?.add({
+    //         'title': controller.cartValue[i],
+    //         'price': controller.cartValue[i+1],
+    //       });
+    //     }
+    //   });
+    // });
   }
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,6 @@ class _CartScreenState extends State<CartScreen> {
           actions: [
             Badge(
               isLabelVisible: false,
-
               child: IconButton(
                 onPressed: (){
                 },
@@ -54,12 +55,12 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ],
         ),
-        body: ListView.builder(
+        body: cartControllerGetx.getCartItemResult != [] ? ListView.builder(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
             shrinkWrap: true,
-            itemCount: productMapList!.length,
+            itemCount: cartControllerGetx.getCartItemResult.length,
             itemBuilder: (context, index) {
-              final item = productMapList![index];
+              final item = cartControllerGetx.getCartItemResult[index];
               final title = item['title'];
               final price = item['price'];
               return Card(
@@ -128,6 +129,6 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
               );
-            }),
+            }) : Center(child: CircularProgressIndicator(),),
     );}
 }
