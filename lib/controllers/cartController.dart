@@ -9,34 +9,33 @@ class CartController extends GetxController {
 
   void setNewArr (List<String>Value){
     newArr.addAll(Value);
-    setCart(newArr);
   }
 
   // TODO LocalStorage init
-  void setCart (newArr) async {
-    SharedPreferences setCart = await SharedPreferences.getInstance();
-    setCart.setStringList("product",newArr);
-  }
+  // void setCart (newArr) async {
+  //   SharedPreferences setCart = await SharedPreferences.getInstance();
+  //   setCart.setStringList("product",newArr);
+  // }
 
-  List<String> getCartItem ()  {
-    return cartValue;
-  }
+  // List<String> getCartItem ()  {
+  //   return cartValue;
+  // }
 
   // TODO LocalStorage setter
-  Future addCart () async {
-    SharedPreferences getCart = await SharedPreferences.getInstance();
-    try{
-      List<String>? itemResult = getCart.getStringList("product");
-      if(itemResult == null){
-        itemResult = [];
-      }
-      cartValue.addAll(itemResult);
-      print(itemResult);
-      return  itemResult;
-    }catch (e){
-      print("getCart Error to $e");
-    }
-  }
+  // Future addCart () async {
+  //   SharedPreferences getCart = await SharedPreferences.getInstance();
+  //   try{
+  //     List<String>? itemResult = getCart.getStringList("product");
+  //     if(itemResult == null){
+  //       itemResult = [];
+  //     }
+  //     cartValue.addAll(itemResult);
+  //     print(itemResult);
+  //     return  itemResult;
+  //   }catch (e){
+  //     print("getCart Error to $e");
+  //   }
+  // }
 }
 
 // final toJson = getCart.getString(id!);
