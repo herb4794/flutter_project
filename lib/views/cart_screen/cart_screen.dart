@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/controllers/cartController.dart';
+import 'package:flutter_application_1/controllers/readTime_controller.dart';
 import 'package:flutter_application_1/widgets_common/our_button.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
@@ -16,6 +17,7 @@ class _CartScreenState extends State<CartScreen> {
   final controller = CartController();
   // final cartController = Get.find();
   final cartControllerGetx = Get.put(CartController());
+  final productController = RealtimeDatebaseController();
   List<Map<String, dynamic>>? productMapList = [];
 
   @override
@@ -39,9 +41,12 @@ class _CartScreenState extends State<CartScreen> {
           Badge(
             isLabelVisible: false,
             child: IconButton(
-              onPressed: (){
+              onPressed: () async {
+                var json = productController.product;
+                print(json);
               },
               icon: Icon(Icons.shopping_cart),
+
             ),
           ),
           SizedBox(

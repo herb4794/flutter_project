@@ -1,30 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
+// initialise authentication
 FirebaseAuth auth = FirebaseAuth.instance;
 
-
-
-
+// initialise fireStore database
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+// initialise readTime database
+FirebaseDatabase database = FirebaseDatabase.instance;
 
+// get user information
 User? currentUser = auth.currentUser;
 
-    //collections
+// collections
 const usersCollection = "users";
 
-class apiInterface {
-  final Map category;
+const productCollection = "product";
 
-  apiInterface({
-    required this.category,
-  });
+// Have all database json object convert to List<Map<String, dynamic>> type
+class ProductInterface {
+  final List<Map<String, dynamic>> productList;
 
-  factory apiInterface.fromjson(Map<String, dynamic> json) {
-    return apiInterface(
-      category: json,
-    );
+  ProductInterface({required this.productList});
+
+  factory ProductInterface.fromJson(List<dynamic> json) {
+    List<Map<String, dynamic>> products = json
+        .map((item) => Map<String, dynamic>.from(item as Map))
+        .toList();
+
+    return ProductInterface(productList: products);
   }
-}
 
+}

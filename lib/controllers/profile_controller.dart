@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 class ProfileController extends GetxController {
   var profileImgPath = ''.obs;
 
+  // Upload  user profile images to the storage
   changeImage(context,email) async {
     try {
       final img = await ImagePicker().pickImage(

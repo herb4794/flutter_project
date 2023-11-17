@@ -13,6 +13,7 @@ class FireCloud extends GetxController {
     storage = FirebaseStorage.instance.ref();
   }
 
+  // Have image url synchronize to fireStorage
   Future uploadImage({email, imageName,file}) async {
     final ref = storage.child('${email}/${imageName}');
     uploadTask = ref.putFile(file);
