@@ -11,9 +11,9 @@ import 'package:get/get.dart';
 class ItemDetails extends StatefulWidget {
   String? title;
   String? price;
-  List<String>? product;
+  String? image;
 
-  ItemDetails({Key? key, required this.title, required this.price}) : super(key: key);
+  ItemDetails({Key? key, required this.title, required this.price, required this.image}) : super(key: key);
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -22,8 +22,8 @@ class ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<ItemDetails> {
   var title;
   var price;
+  var image;
   var cartControllerGetx = Get.put(CartController());
-  List<String>? product;
 
 
   @override
@@ -31,6 +31,7 @@ class _ItemDetailsState extends State<ItemDetails> {
     setState(() {
       title = widget.title;
       price = widget.price;
+      image = widget.image;
     });
     // TODO: implement initState
     super.initState();
@@ -68,10 +69,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                   VxSwiper.builder(
                     autoPlay: true,
                     height: 350,
-                    itemCount: 3,
+                    itemCount: 0,
                     aspectRatio: 16 / 9,
                     itemBuilder: (context, index) {
-                      return Image.asset(imgFc5,
+                      return Image.network(image,
                         width: double.infinity, fit: BoxFit.cover);
                     }),
 
@@ -287,6 +288,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                 List<Map<String, dynamic>> toJson = [{
                   "title": title,
                   "price": price,
+                  "image": image,
                 }];
                 cartControllerGetx.getCartItemResult.addAll(toJson);
                 print("=========================================================");

@@ -35,6 +35,7 @@ class _CartScreenState extends State<CartScreen> {
       backgroundColor: Colors.white,
       appBar :AppBar(
         backgroundColor: Colors.blue,
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text('Cart',style: TextStyle(color: Colors.black),),
         actions: [
@@ -62,6 +63,7 @@ class _CartScreenState extends State<CartScreen> {
           final item = productMapList![index];
           final title = item['title'];
           final price = item['price'];
+          final image = item['image'];
           return Card(
             color: Colors.orange.shade300,
             elevation: 5.0,
@@ -73,7 +75,7 @@ class _CartScreenState extends State<CartScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Image.network(
-                    "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
+                    image,
                     height: 80,
                     width: 80,
                   ),

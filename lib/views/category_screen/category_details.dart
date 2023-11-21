@@ -8,9 +8,9 @@ import 'package:flutter_application_1/widgets_common/bg_widget.dart';
 import 'package:get/get.dart';
 
 class CategoryDetails extends StatelessWidget {
+  final List<Map<String,dynamic>>? product;
   final String? title;
-  // final Map<String, dynamic>? product;
-  const CategoryDetails({Key? key, required this.title}) : super(key: key);
+  const CategoryDetails({Key? key,required this.product, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class CategoryDetails extends StatelessWidget {
                 child: GridView.builder(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 6,
+                    itemCount: product!.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -62,19 +62,19 @@ class CategoryDetails extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            imgP5,
+                          Image.network(
+                            product![index]['product_image'].toString(),
                             height: 150,
                             width: 200,
                             fit: BoxFit.cover,
                           ),
-                          "Laptop 4GB/64GB"
+                          product![index]['product_en_name'].toString()
                               .text
                               .fontFamily(semibold)
                               .color(darkFontGrey)
                               .make(),
                           10.heightBox,
-                          "\$600"
+                         product![index]['product_price'].toString()
                               .text
                               .color(redColor)
                               .fontFamily(bold)
@@ -91,7 +91,12 @@ class CategoryDetails extends StatelessWidget {
                           .padding(const EdgeInsets.all(12))
                           .make()
                           .onTap(() {
-                        Get.to(() => ItemDetails(title: title, price: "333",));
+                        Get.to(() => ItemDetails(
+                          title: product![index]['product_en_name'].toString(),
+                          price: product![index]['product_price'].toString(),
+                          image: product![index]['product_image'].toString(),
+                        ),
+                        );
                       });
                     }))
           ],
