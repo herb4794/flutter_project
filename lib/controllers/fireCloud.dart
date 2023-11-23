@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/data.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/rng.dart';
 import 'package:get/get.dart';
 
 //  storing data method
@@ -8,6 +11,7 @@ import 'package:get/get.dart';
 class FireCloud extends GetxController {
   UploadTask? uploadTask;
   var storage;
+  var uuid = Uuid().v1();
 
   FireCloud(){
     storage = FirebaseStorage.instance.ref();
@@ -38,17 +42,16 @@ class FireCloud extends GetxController {
     }
   }
 
+  // TODO upload product array to firestore
   addCart({product}){
     auth.authStateChanges().listen((user) async {
       if(user != null){
         final docRef = await firestore.collection(usersCollection).doc(user.uid);
-        docRef.update({"orders" : product}).then(
+        docRef.update({"orders" : FieldValue.arrayUnion(product)}).then(
                 (value) => print("Add Cart"),
             onError: (e) => print("Add Cart Error $e"));
       }
     });
   }
-
-// cart get data method
 }
 

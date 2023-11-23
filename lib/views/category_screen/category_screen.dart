@@ -8,11 +8,9 @@ import 'package:flutter_application_1/controllers/readTime_controller.dart';
 import 'package:flutter_application_1/views/category_screen/category_details.dart';
 import 'package:flutter_application_1/widgets_common/bg_widget.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
-
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -21,18 +19,6 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   var database = RealtimeDatebaseController();
   List<Map<String, dynamic>> productResult = [];
-
-  Future<Map<String, dynamic>> categoryFuture() async {
-
-    final res =
-        await http.get(Uri.parse('https://dummyjson.com/products?limit=10'));
-    final result = res.body;
-    if (result.isNotEmpty) {
-      return json.decode(result);
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

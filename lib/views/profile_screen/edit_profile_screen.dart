@@ -38,8 +38,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           existObj?['name'] = existUserData!['name'].toString();
           existObj?['email'] = existUserData!['email'].toString();
           existObj?['ImageUrl'] = existUserData!['imageUrl'].toString();
-          print("=============================================existObj==============================================");
-          print(existObj);
         });
       }
     });
@@ -70,12 +68,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ourButton(
                 color: redColor,
                 onPress: () {
-                  controller.changeImage(context,existObj!['email']);
+                  setState(() {
+                    controller.changeImage(context,existObj!['email']);
+                  });
                 },
                 textColor: whiteColor,
                 title: "Change Picture",
               ),
-              Divider(),
+              const Divider(),
               20.heightBox,
               customTextField(
                 hint: existObj!['name'].toString(),

@@ -289,6 +289,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                   "title": title,
                   "price": price,
                   "image": image,
+                  "quantity": 1,
+                  "status": false
                 }];
                 cartControllerGetx.getCartItemResult.addAll(toJson);
                 print("=========================================================");

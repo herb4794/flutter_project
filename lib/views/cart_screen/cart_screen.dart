@@ -4,8 +4,12 @@ import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/controllers/cartController.dart';
 import 'package:flutter_application_1/controllers/readTime_controller.dart';
 import 'package:flutter_application_1/widgets_common/our_button.dart';
+import 'package:flutter_application_1/controllers/fireCloud.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
+import 'package:uuid/data.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/rng.dart';
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -18,7 +22,10 @@ class _CartScreenState extends State<CartScreen> {
   // final cartController = Get.find();
   final cartControllerGetx = Get.put(CartController());
   final productController = RealtimeDatebaseController();
+  final orderController = FireCloud();
+  final uuid = Uuid().v1();
   List<Map<String, dynamic>>? productMapList = [];
+  List<Map<String, dynamic>> orderMapList = [];
 
   @override
   void initState() {
@@ -26,9 +33,13 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
     setState(() {
       productMapList = cartControllerGetx.getCartItemResult;
-      print(productMapList);
+      orderMapList.add({
+        uuid: productMapList
+      });
     });
   }
+
+  // final uploadOrber = 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +81,6 @@ class _CartScreenState extends State<CartScreen> {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
-
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -129,6 +139,9 @@ class _CartScreenState extends State<CartScreen> {
                       cartControllerGetx.getCartItemResult.removeAt(index);
                     });
                   }),
+                  TextButton(onPressed: (){
+                    orderController.addCart(product: orderMapList);
+                  }, child: Text("Order"))
                 ],
               ),
             ),
