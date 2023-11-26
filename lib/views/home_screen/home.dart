@@ -3,30 +3,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/controllers/cartController.dart';
 import 'package:flutter_application_1/controllers/home_controller.dart';
+import 'package:flutter_application_1/controllers/readTime_controller.dart';
 import 'package:flutter_application_1/views/cart_screen/cart_screen.dart';
 import 'package:flutter_application_1/views/category_screen/category_screen.dart';
 import 'package:flutter_application_1/views/home_screen/home_screen.dart';
 import 'package:flutter_application_1/views/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  State<Home> createState() => _HomeState();
+}
+class _HomeState extends State<Home> {
+  var database = RealtimeDatebaseController().setProduct();
+  List<Map<String, dynamic>> product = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      database.then((value) {
+        product.addAll(value);
+      });
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     // init home controller
-
     var controller  = Get.put(HomeController());
-
+    final cartControllerGetx = Get.put(CartController());
     var navbarItem = [
       BottomNavigationBarItem(icon: Image.asset(icHome, width: 26), label: home ),
       BottomNavigationBarItem(icon: Image.asset(icCategories, width: 26), label: categories ),
       BottomNavigationBarItem(icon: Image.asset(icCart, width: 26), label: cart ),
       BottomNavigationBarItem(icon: Image.asset(icProfile, width: 26), label: account )
     ];
-
     var navBody = [
-      const HomeScreen(),
+       HomeScreen(result: product),
       const CategoryScreen(),
       const CartScreen(),
       const ProfileScreen(),
@@ -42,7 +57,7 @@ class Home extends StatelessWidget {
           BottomNavigationBar(
             currentIndex: controller.currentNavIndex.value,
             selectedItemColor: redColor,
-            selectedLabelStyle: const TextStyle(fontFamily: semibold),
+            selectedLabelStyle:  TextStyle(fontFamily: semibold),
             type: BottomNavigationBarType.fixed,
             backgroundColor: whiteColor,
             items: navbarItem,

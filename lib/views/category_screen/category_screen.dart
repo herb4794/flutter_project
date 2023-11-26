@@ -47,7 +47,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     'PcGamingEquipment' : PcGamingEquipment.toList(),
                     'gifs' : gifs.toList()
                   });
-                  print(categories[0]['smartPhone']);
                   return Column(
                     children: [
                       Container(

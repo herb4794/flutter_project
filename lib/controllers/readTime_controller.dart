@@ -4,13 +4,16 @@ import 'package:flutter_application_1/consts/consts.dart';
 import 'package:get/get.dart';
 
 class RealtimeDatebaseController extends GetxController {
-  List<Map<String, dynamic>>? product = [];
+  List<Map<String, dynamic>> product = [];
 
   // getter method of the Realtime database product item
-  List<Map<String, dynamic>> get getProduct => product!;
+  List<Map<String, dynamic>> get getProduct => product;
 
   // Initialise method
-  RealtimeDatebaseController(){ synchronicity(); }
+  RealtimeDatebaseController(){
+     setProduct().then((value) {
+    return product.addAll(value);
+  }); }
 
   // Monitor changes
   synchronicity ()  {

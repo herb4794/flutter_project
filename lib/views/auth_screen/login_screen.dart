@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                                 .then((value) {
                               if (value != null) {
                                 VxToast.show(context, msg: loggedin);
-                                Get.offAll(() => const Home());
+                                Get.offAll(() =>  Home());
                               }
                             });
                           }).box.width(context.screenWidth - 50).make(),

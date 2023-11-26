@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:uuid/data.dart';
-import 'package:uuid/uuid.dart';
-import 'package:uuid/rng.dart';
 import 'package:get/get.dart';
 
 //  storing data method
@@ -11,11 +8,11 @@ import 'package:get/get.dart';
 class FireCloud extends GetxController {
   UploadTask? uploadTask;
   var storage;
-  var uuid = Uuid().v1();
 
   FireCloud(){
     storage = FirebaseStorage.instance.ref();
   }
+
 
   // Have image url synchronize to fireStorage
   Future uploadImage({email, imageName,file}) async {
@@ -34,12 +31,18 @@ class FireCloud extends GetxController {
   }
 
   storingUserData({name, method, email, imageUrl}) async {
-    if(currentUser != null){
-      DocumentReference store =
-      firestore.collection(usersCollection).doc(currentUser!.uid);
-      store.set(
-      {'name': name, 'method': method, 'email': email, 'imageUrl': imageUrl, "orders" : []});
-    }
+    firestore.collection(usersCollection).doc(currentUser!.uid).get().then((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      if(data != null){
+        print(data);
+      }else{
+        DocumentReference store =
+        firestore.collection(usersCollection).doc(currentUser!.uid);
+        store.set(
+            {'name': name, 'method': method, 'email': email, 'imageUrl': imageUrl, "orders" : []});
+      }
+    });
+
   }
 
   // TODO upload product array to firestore

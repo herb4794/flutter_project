@@ -57,14 +57,14 @@ class AuthController extends GetxController {
       );
       await auth.signInWithCredential(credential);
       var userResult = await auth.signInWithCredential(credential);
-      FireCloud().storingUserData(
-          name: userResult.user!.displayName,
-          email: userResult.user!.email,
-          method: "google",
-          imageUrl: userResult.user!.photoURL);
+        FireCloud().storingUserData(
+            name: userResult.user!.displayName,
+            email: userResult.user!.email,
+            method: "google",
+            imageUrl: userResult.user!.photoURL);
       print("---------------------Google User--------------------------------");
       print(userResult.user!.uid);
-      Get.to(() => const Home());
+      Get.to(() =>  Home());
     } catch (e) {
       print("Error Google is False" + e.toString());
     }

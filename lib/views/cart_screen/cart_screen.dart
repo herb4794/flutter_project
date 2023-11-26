@@ -53,9 +53,8 @@ class _CartScreenState extends State<CartScreen> {
           Badge(
             isLabelVisible: false,
             child: IconButton(
-              onPressed: () async {
-                var json = productController.product;
-                print(json);
+              onPressed: ()  {
+
               },
               icon: Icon(Icons.shopping_cart),
 
