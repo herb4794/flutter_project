@@ -23,6 +23,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   var title;
   var price;
   var image;
+  int quantity = 1;
   var cartControllerGetx = Get.put(CartController());
 
 
@@ -32,6 +33,7 @@ class _ItemDetailsState extends State<ItemDetails> {
       title = widget.title;
       price = widget.price;
       image = widget.image;
+      quantity;
     });
     // TODO: implement initState
     super.initState();
@@ -40,7 +42,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
-    int quantity = 0;
+
     return Scaffold(
       backgroundColor: lightGrey,
       appBar: AppBar(
@@ -172,16 +174,27 @@ class _ItemDetailsState extends State<ItemDetails> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if(quantity > 1){
+                                    setState(() {
+                                      quantity --;
+                                      price = double.parse(widget.price.toString()) * quantity;
+                                    });
+                                  }
+                                },
                                 icon: const Icon(Icons.remove)),
-                              "0"
-                              .text
+                              quantity.toString().text
                               .size(16)
                               .color(darkFontGrey)
                               .fontFamily(bold)
                               .make(),
                               IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.add)),
+                                onPressed: () {
+                                    setState(() {
+                                      quantity ++;
+                                      price = double.parse(widget.price.toString()) * quantity;
+                                  });
+                                }, icon: const Icon(Icons.add)),
                               10.heightBox,
                               "(0 available)".text.color(textfieldGrey).make(),
                             ],
@@ -195,7 +208,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                             width: 100,
                             child: "Total: ".text.color(textfieldGrey).make(),
                           ),
-                          "\$0.00"
+                          "\$${price.toString()}"
                           .text
                           .color(redColor)
                           .size(16)
