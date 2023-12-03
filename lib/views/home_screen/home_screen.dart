@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     setState(() {
-        print(widget.result);
       });
   }
   @override
@@ -203,14 +202,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                  imgP5,
+                                Image.network(
+                                  widget.result[index]['product_image'],
                                   height: 200,
                                   width: 200,
                                   fit: BoxFit.cover,
                                 ),
                                 const Spacer(),
-                                "${widget.result[index]['product_en_name']}".toString().text.fontFamily(semibold).color(darkFontGrey).make(),
+                                "${widget.result[index]['product_en_name']}".toString().text.size(12).fontFamily(semibold).color(darkFontGrey).make(),
                                 10.heightBox,
                                 "\$${widget.result[index]['product_price']}".toString().text.color(redColor).fontFamily(bold).size(16).make(),
                                 10.heightBox,

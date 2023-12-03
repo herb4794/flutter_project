@@ -24,7 +24,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   var price;
   var image;
   var cartControllerGetx = Get.put(CartController());
-
+  int quantity = 1;
 
   @override
   void initState() {
@@ -40,11 +40,10 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
-    int quantity = 0;
     return Scaffold(
       backgroundColor: lightGrey,
       appBar: AppBar(
-        title: widget.title!.text.color(darkFontGrey).fontFamily(bold).make(),
+        title: widget.title!.text.color(darkFontGrey).overflow(TextOverflow.ellipsis).fontFamily(bold).make(),
         actions: [
           IconButton(
             onPressed: () {},
@@ -80,6 +79,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   //  title and details section
                   widget.title!.text
                   .size(16)
+                  .overflow(TextOverflow.ellipsis)
                   .color(darkFontGrey)
                   .fontFamily(semibold)
                   .make(),
@@ -97,7 +97,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   10.heightBox,
                   Text(
                     "\$${widget.price?.toString()}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: redColor,
                       fontFamily: bold,
                       fontSize: 16,
@@ -172,16 +172,30 @@ class _ItemDetailsState extends State<ItemDetails> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    if(quantity > 1){
+                                    price = double.parse(price.toString()) * quantity;
+                                    quantity--;
+                                    }
+                                  });
+                                },
                                 icon: const Icon(Icons.remove)),
-                              "0"
+                              quantity.toString()
                               .text
                               .size(16)
                               .color(darkFontGrey)
                               .fontFamily(bold)
                               .make(),
                               IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.add)),
+                                onPressed: () {
+                                  setState(() {
+                                    if(quantity <= 0){
+                                    price = double.parse(price.toString()) * quantity;
+                                    quantity++;
+                                    }
+                                  });
+                                }, icon: const Icon(Icons.add)),
                               10.heightBox,
                               "(0 available)".text.color(textfieldGrey).make(),
                             ],
@@ -195,7 +209,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                             width: 100,
                             child: "Total: ".text.color(textfieldGrey).make(),
                           ),
-                          "\$0.00"
+                          "\$${price.toString()}"
                           .text
                           .color(redColor)
                           .size(16)
@@ -219,7 +233,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   .make(),
                   10.heightBox,
                   ListView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: List.generate(
                       subjectiveIdealism.length,
@@ -289,12 +303,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                   "title": title,
                   "price": price,
                   "image": image,
-                  "quantity": 1,
+                  "quantity": quantity,
                   "status": false
                 }];
                 cartControllerGetx.getCartItemResult.addAll(toJson);
-                print("=========================================================");
-                print(cartControllerGetx.getCartItemResult);
               },
               textColor: whiteColor,
               title: "Add to cart"),

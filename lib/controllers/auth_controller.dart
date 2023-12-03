@@ -46,7 +46,7 @@ class AuthController extends GetxController {
   }
 
   //  google sign in method
-  GoogleLoginMethod() async {
+  GoogleLoginMethod({product}) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication googleAuth =
@@ -64,14 +64,14 @@ class AuthController extends GetxController {
             imageUrl: userResult.user!.photoURL);
       print("---------------------Google User--------------------------------");
       print(userResult.user!.uid);
-      Get.to(() =>  Home());
+      Get.to(() =>  Home(product: product));
     } catch (e) {
       print("Error Google is False" + e.toString());
     }
   }
 
 
-  void updateLocalUserEmailAndPassword ({context}) {
+  void updateLocalUserEmailAndPassword ({context }) {
     auth.authStateChanges().listen((user) async {
       if(user != null){
         final docRef = await firestore.collection(usersCollection).doc(user.uid);
@@ -81,7 +81,7 @@ class AuthController extends GetxController {
         docRef.update({"name" : userNameController.text}).then(
                 (value) => print("update successful"),
             onError: (e) => print("Error updating document $e"));
-        Get.to(() => Home());
+        Get.to(() => ProfileScreen());
         VxToast.show(context, msg: "Change is successful");
       }else{
         VxToast.show(context, msg: "Something Error");

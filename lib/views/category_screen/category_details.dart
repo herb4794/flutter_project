@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class CategoryDetails extends StatelessWidget {
   final List<Map<String,dynamic>>? product;
   final String? title;
-  const CategoryDetails({Key? key,required this.product, required this.title}) : super(key: key);
+  const CategoryDetails({Key? key, required this.product, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +28,8 @@ class CategoryDetails extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(
-                    6,
-                    (index) => "Baby Clothing"
+                    product!.length,
+                    (index) => "${product![index]['product_en_brand']}".toString()
                         .text
                         .size(12)
                         .fontFamily(semibold)
@@ -64,17 +64,22 @@ class CategoryDetails extends StatelessWidget {
                         children: [
                           Image.network(
                             product![index]['product_image'].toString(),
-                            height: 150,
+                            height: 130,
                             width: 200,
                             fit: BoxFit.cover,
                           ),
                           product![index]['product_en_name'].toString()
                               .text
+                              .maxLines(1)
+                              .size(14)
+                              .softWrap(false)
+                              .overflow(TextOverflow.ellipsis)
+                              .align(TextAlign.start)
                               .fontFamily(semibold)
                               .color(darkFontGrey)
                               .make(),
                           10.heightBox,
-                         product![index]['product_price'].toString()
+                         "\$${product![index]['product_price']}".toString()
                               .text
                               .color(redColor)
                               .fontFamily(bold)
@@ -95,6 +100,7 @@ class CategoryDetails extends StatelessWidget {
                           title: product![index]['product_en_name'].toString(),
                           price: product![index]['product_price'].toString(),
                           image: product![index]['product_image'].toString(),
+                          
                         ),
                         );
                       });

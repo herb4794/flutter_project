@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/consts/lists.dart';
 import 'package:flutter_application_1/controllers/auth_controller.dart';
+import 'package:flutter_application_1/views/auth_screen/login_screen.dart';
 import 'package:flutter_application_1/views/home_screen/home.dart';
 import 'package:flutter_application_1/widgets_common/applogo_widget.dart';
 import 'package:flutter_application_1/widgets_common/bg_widget.dart';
@@ -127,7 +128,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             );
                           }).then((value) {
                             VxToast.show(context, msg: loggedin);
-                            Get.offAll(() => Home());
+                            Get.offAll(() => LoginScreen());
                           });
                         } catch (e) {
                           auth.signOut();

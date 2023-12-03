@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   : 'Anonymous'.text.make(),
                               5.heightBox,
                               existObj?['email']!= null
-                                  ? existObj!['email'].toString().text.make()
+                                  ? existObj!['email'].toString().text.color(Colors.white).make()
                                   : "".text.make(),
                             ],
                           )),

@@ -11,23 +11,17 @@ import 'package:flutter_application_1/views/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  List<Map<String, dynamic>> product = [];
+  Home({Key? key, required this.product}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 class _HomeState extends State<Home> {
-  var database = RealtimeDatebaseController().setProduct();
-  List<Map<String, dynamic>> product = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      database.then((value) {
-        product.addAll(value);
-      });
-    });
   }
   @override
   Widget build(BuildContext context) {
@@ -41,7 +35,7 @@ class _HomeState extends State<Home> {
       BottomNavigationBarItem(icon: Image.asset(icProfile, width: 26), label: account )
     ];
     var navBody = [
-       HomeScreen(result: product),
+      HomeScreen(result: widget.product),
       const CategoryScreen(),
       const CartScreen(),
       const ProfileScreen(),
@@ -54,17 +48,17 @@ class _HomeState extends State<Home> {
         ],
       ),
       bottomNavigationBar: Obx(() =>
-          BottomNavigationBar(
-            currentIndex: controller.currentNavIndex.value,
-            selectedItemColor: redColor,
-            selectedLabelStyle:  TextStyle(fontFamily: semibold),
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: whiteColor,
-            items: navbarItem,
-            onTap: (value){
-              controller.currentNavIndex.value = value;
-            },
-          ),
+        BottomNavigationBar(
+          currentIndex: controller.currentNavIndex.value,
+          selectedItemColor: redColor,
+          selectedLabelStyle:  TextStyle(fontFamily: semibold),
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: whiteColor,
+          items: navbarItem,
+          onTap: (value){
+            controller.currentNavIndex.value = value;
+          },
+        ),
       ),
     );
   }
