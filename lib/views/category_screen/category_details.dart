@@ -100,7 +100,7 @@ class CategoryDetails extends StatelessWidget {
                           title: product![index]['product_en_name'].toString(),
                           price: product![index]['product_price'].toString(),
                           image: product![index]['product_image'].toString(),
-                          
+                          description: product![index]['product_en_description'].toString(),
                         ),
                         );
                       });

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/controllers/cartController.dart';
 import 'package:flutter_application_1/controllers/readTime_controller.dart';
+import 'package:flutter_application_1/views/cart_screen/componets/cartColor.dart';
+import 'package:flutter_application_1/views/cart_screen/componets/cartItemContainer.dart';
 import 'package:flutter_application_1/widgets_common/our_button.dart';
 import 'package:flutter_application_1/controllers/fireCloud.dart';
 import 'package:get/get.dart';
@@ -24,8 +26,9 @@ class _CartScreenState extends State<CartScreen> {
   final productController = RealtimeDatebaseController();
   final orderController = FireCloud();
   final uuid = Uuid().v1();
-  List<Map<String, dynamic>>? productMapList = [];
+  List<Map<String, dynamic>>? productMapList;
   List<Map<String, dynamic>> orderMapList = [];
+  var total;
 
   @override
   void initState() {
@@ -36,115 +39,126 @@ class _CartScreenState extends State<CartScreen> {
       orderMapList.add({
         uuid: productMapList
       });
+       total = productMapList!.fold(0.0, (pre, product) {
+        var price = double.parse(product['price'].toString());
+        return pre+ price;
+      });
+      print("================================================");
+      print(total);
     });
+
   }
 
   // final uploadOrber = 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar :AppBar(
-        backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: categories.text.fontFamily(bold).white.make(),
         automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text('Cart',style: TextStyle(color: Colors.black),),
-        actions: [
-          Badge(
-            isLabelVisible: false,
-            child: IconButton(
-              onPressed: ()  {
-
-              },
-              icon: Icon(Icons.shopping_cart),
-
-            ),
-          ),
-          SizedBox(
-            width: 20.0,
-          ),
-        ],
       ),
-      body: cartControllerGetx.getCartItemResult != [] ? ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-        shrinkWrap: true,
-        itemCount: productMapList!.length,
-        itemBuilder: (context, index) {
-          final item = productMapList![index];
-          final title = item['title'];
-          final price = item['price'];
-          final image = item['image'];
-          return Card(
-            color: Colors.orange.shade300,
-            elevation: 5.0,
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Image.network(
-                    image,
-                    height: 80,
-                    width: 80,
-                  ),
-                  SizedBox(
-                    width: 130,
-                    child: Column(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.maxFinite,
+        color: CartColor.myCartBackgroundColor,
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+                color: CartColor.backgroundColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25))),
+            padding: EdgeInsets.all(10),
+            width: 400,
+            height: 600,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                // row of text and icon
+                Row(
+                  children: const [
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          'My Cart',
+                          style: TextStyle(
+                              color: CartColor.darkText,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.close,
+                      color: CartColor.lightBlue,
+                      size: 30,
+                    ),
+                  ],
+                ),
+                // column of image, text and button
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: productMapList!.map((productList) => CartItemContainer(
+                      image: productList['image'],
+                      itemName: productList['title'].toString(),
+                      itemPrice: productList['price'].toString(),
+                      itemQuantity: productList['quantity'].toString()),).toList()
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                // row of text and button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // column of text
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: 5.0,
+                        Text(
+                          'Total',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: CartColor.lightBlue),
                         ),
-                        RichText(
+                        Text(
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          text: TextSpan(
-                            text: 'Name: ',
-                            style: TextStyle(
-                              color: Colors.blueGrey.shade800,
-                              fontSize: 16.0),
-                            children: [
-                              TextSpan(
-                                text:
-                                '${title}\n',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold)),
-                            ]),
-                        ),
-                        RichText(
-                          maxLines: 1,
-                          text: TextSpan(
-                            text: 'Price: ' r"$",
-                            style: TextStyle(
-                              color: Colors.blueGrey.shade800,
-                              fontSize: 16.0),
-                            children: [
-                              TextSpan(
-                                text:
-                                '${price.toString()}\n',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold)),
-                            ]),
-                        ),
+                          "\$${total}",
+                          style: TextStyle(
+                              color: CartColor.darkText,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
-                  ),
-                  Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ).onTap(() {
-                    setState(() {
-                      cartControllerGetx.getCartItemResult.removeAt(index);
-                    });
-                  }),
-                  TextButton(onPressed: (){
-                    orderController.addCart(product: orderMapList);
-                  }, child: Text("Order"))
-                ],
-              ),
+                    // button
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      width: 150,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: CartColor.lightBlue,
+                          borderRadius: BorderRadius.circular(25)),
+                      child: Text(
+                        'Checkout',
+                        style: TextStyle(
+                            color: CartColor.backgroundColor,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                )
+              ],
             ),
-          );
-        }) : Center(child: CircularProgressIndicator(),),
-    );}
+          ),
+        ),
+      ),
+    );
+  }
 }

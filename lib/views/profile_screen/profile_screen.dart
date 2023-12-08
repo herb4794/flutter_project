@@ -180,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     .shadowSm
                     .make()
                     .box
-                    .color(redColor)
+                    .color(Colors.black12)
                     .make(),
               ],
             ),
