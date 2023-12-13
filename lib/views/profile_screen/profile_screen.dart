@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/consts/lists.dart';
 import 'package:flutter_application_1/controllers/auth_controller.dart';
+import 'package:flutter_application_1/controllers/cartController.dart';
 import 'package:flutter_application_1/controllers/profile_controller.dart';
 import 'package:flutter_application_1/views/auth_screen/login_screen.dart';
 import 'package:flutter_application_1/views/profile_screen/components/details_card.dart';
@@ -22,6 +23,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final cartControllerGetx = Get.put(CartController());
+  List<Map<String, dynamic>>? productMapList;
+  List<Map<String, dynamic>>? orderList;
   var controller;
   Map? existObj = {
     "name" : "",
@@ -29,24 +33,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "method" : "",
     "ImageUrl" : " "
   };
-
+  List productArr = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    productMapList = cartControllerGetx.getCartItemResult;
     auth.authStateChanges().listen((User? user)async {
       if (user != null)  {
         var existUser = await firestore.collection(usersCollection).doc(user.uid).get();
         var existUserData = existUser.data();
+
         setState(() {
           existObj?['name'] = existUserData!['name'].toString();
           existObj?['email'] = existUserData!['email'].toString();
           existObj?['method'] = existUserData!['method'].toString();
           existObj?['ImageUrl'] = existUserData!['imageUrl'].toString();
+          productArr =  existUserData!['orders'];
+          print(productArr.length);
           controller = Get.put(ProfileController());
         });
       }
     });
+    print(orderList);
   }
 
   @override
@@ -134,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     detailsCard(
-                        count: 0,
+                        count: productMapList!.length,
                         title: "in your cart",
                         width: context.screenWidth / 3.4),
                     detailsCard(
@@ -142,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title: "in your wishlist",
                         width: context.screenWidth / 3.4),
                     detailsCard(
-                        count: 0,
+                        count:  productArr!.length,
                         title: "your orders",
                         width: context.screenWidth / 3.4),
                   ],

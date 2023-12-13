@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/views/cart_screen/componets/cartColor.dart';
 
 class CartItemContainer extends StatelessWidget {
@@ -8,6 +9,8 @@ class CartItemContainer extends StatelessWidget {
   String itemPrice;
   String itemQuantity;
   String displayName;
+  Function()? decreaseQuantity;
+  Function()? increaseQuantity;
 
   static String limitStringLength(String input, int maxLength) {
     if (input.length <= maxLength) {
@@ -23,7 +26,9 @@ class CartItemContainer extends StatelessWidget {
     required this.itemName,
     required this.itemPrice,
     required this.itemQuantity,
-  }) : displayName = limitStringLength(itemName.toString(), 15), super(key: key);
+    this.decreaseQuantity,
+    this.increaseQuantity
+  }) : displayName = limitStringLength(itemName.toString(), 30), super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,9 @@ class CartItemContainer extends StatelessWidget {
                   Icons.remove,
                   size: 15,
                   color: CartColor.lightBlue,
-                ),
+                ).onTap(() {
+                  decreaseQuantity!();
+                }),
                 Text(
                   itemQuantity,
                   style: TextStyle(
@@ -94,7 +101,9 @@ class CartItemContainer extends StatelessWidget {
                   Icons.add,
                   size: 15,
                   color: CartColor.lightBlue,
-                ),
+                ).onTap(() {
+                  increaseQuantity!();
+                }),
               ],
             ),
           ),

@@ -46,11 +46,16 @@ class FireCloud extends GetxController {
   }
 
   // TODO upload product array to firestore
-  addCart({product}){
+  addCart({product, total}){
+    List<Map<String,dynamic>> result = [];
+    result.add({
+      "products": product,
+      "totalPrice": total
+    });
     auth.authStateChanges().listen((user) async {
       if(user != null){
         final docRef = await firestore.collection(usersCollection).doc(user.uid);
-        docRef.update({"orders" : FieldValue.arrayUnion(product)}).then(
+        docRef.update({"orders" : FieldValue.arrayUnion(result)}).then(
                 (value) => print("Add Cart"),
             onError: (e) => print("Add Cart Error $e"));
       }

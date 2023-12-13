@@ -195,14 +195,13 @@ class _ItemDetailsState extends State<ItemDetails> {
             child: ourButton(
                 color: redColor,
                 onPress: () async {
-                  double price = double.parse(widget.price!) * quantity;
-                  List<Map<String, dynamic>> toJson = [{
+                  Set<Map<String, dynamic>> toJson = {{
                     "title": title,
-                    "price": price,
+                    "price": widget.price,
                     "image": image,
                     "quantity": quantity,
                     "status": false
-                  }];
+                  }};
                   cartControllerGetx.getCartItemResult.addAll(toJson);
                 },
                 textColor: whiteColor,
