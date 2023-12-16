@@ -38,39 +38,29 @@ class CartItemContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //a  row of image and text
-          Row(
+          Image(
+            fit: BoxFit.cover,
+            height: 50,
+            width: 50,
+            image: NetworkImage(image)
+          ),
+          Column(
             children: [
-              Image(
-                  fit: BoxFit.cover,
-                  height: 50,
-                  width: 50,
-                  image: NetworkImage(image)
+              Text(
+                displayName,
+                style: TextStyle(
+                  color: CartColor.lightBlue,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Column(
-                children: [
-                  Text(
-                    displayName,
-                    style: TextStyle(
-                        color: CartColor.lightBlue,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    itemPrice,
-                    style: TextStyle(
-                      color: CartColor.darkText,
-                      fontSize: 15,
-                      //fontWeight: FontWeight.bold
-                    ),
-                  )
-                ],
-              ),
+              Text(
+                "\$${itemPrice}",
+                style: TextStyle(
+                  color: CartColor.darkText,
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold
+                ),
+              )
             ],
           ),
           // button
@@ -78,8 +68,8 @@ class CartItemContainer extends StatelessWidget {
             padding: EdgeInsets.all(8),
             width: 100,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: CartColor.lightBlue)),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: CartColor.lightBlue)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

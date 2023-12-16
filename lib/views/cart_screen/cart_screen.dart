@@ -26,7 +26,7 @@ class _CartScreenState extends State<CartScreen> {
   final cartControllerGetx = Get.put(CartController());
   final productController = RealtimeDatebaseController();
   final orderController = FireCloud();
-  final uuid = Uuid().v1();
+  final uuid = const Uuid().v1();
   List<Map<String, dynamic>>? productMapList;
   List<Map<String, dynamic>> orderMapList = [];
   RxDouble total = 0.0.obs;
@@ -75,10 +75,10 @@ class _CartScreenState extends State<CartScreen> {
         body: Center(
           child: Container(
             decoration: BoxDecoration(
-                color: CartColor.backgroundColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25))),
+              color: CartColor.backgroundColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25))),
             padding: EdgeInsets.all(10),
             width: 400,
             height: 600,
@@ -97,28 +97,31 @@ class _CartScreenState extends State<CartScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: productMapList!.map((productList) => CartItemContainer(
-                        image: productList['image'],
-                        itemName: productList['title'].toString(),
-                        itemPrice: productList['price'].toString(),
-                        itemQuantity: productList['quantity'].toString(),
+                      image: productList['image'],
+                      itemName: productList['title'].toString(),
+                      itemPrice: productList['price'].toString(),
+                      itemQuantity: productList['quantity'].toString(),
                       decreaseQuantity: (){
-                          setState(() {
-                            int currentQuantity = int.parse(productList['quantity'].toString());
-                            if (currentQuantity > 1) {
-                              currentQuantity--;
-                              productList['quantity'] = currentQuantity.toString();
-                              updateTotal();
-                            }
-                          });
-                      },
-                        increaseQuantity:(){
-                          setState(() {
-                            int currentQuantity = int.parse(productList['quantity'].toString());
-                            currentQuantity++;
+                        setState(() {
+                          int currentQuantity = int.parse(productList['quantity'].toString());
+                          if (currentQuantity >= 1) {
+                            currentQuantity--;
                             productList['quantity'] = currentQuantity.toString();
                             updateTotal();
-                          });
-                        }
+                          }
+                          if (currentQuantity == 0){
+                              productMapList!.remove(productList);
+                            }
+                        });
+                      },
+                      increaseQuantity:(){
+                        setState(() {
+                          int currentQuantity = int.parse(productList['quantity'].toString());
+                          currentQuantity++;
+                          productList['quantity'] = currentQuantity.toString();
+                          updateTotal();
+                        });
+                      }
                     ),).toList()
                   ),
                   // row of text and button
@@ -132,16 +135,16 @@ class _CartScreenState extends State<CartScreen> {
                           Text(
                             'Total',
                             style: TextStyle(
-                                fontSize: 16,
-                                color: CartColor.lightBlue),
+                              fontSize: 16,
+                              color: CartColor.lightBlue),
                           ),
                           Text(
                             overflow: TextOverflow.ellipsis,
                             "\$${total}".toString(),
                             style: TextStyle(
-                                color: CartColor.darkText,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                              color: CartColor.darkText,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
                           )
                         ],
                       ),
@@ -151,13 +154,13 @@ class _CartScreenState extends State<CartScreen> {
                         width: 100,
                         height: 50,
                         decoration: BoxDecoration(
-                            color: CartColor.lightBlue,
-                            borderRadius: BorderRadius.circular(25)),
+                          color: CartColor.lightBlue,
+                          borderRadius: BorderRadius.circular(25)),
                         child: Text(
                           'Checkout',
                           style: TextStyle(
-                              color: CartColor.backgroundColor,
-                              fontWeight: FontWeight.bold),
+                            color: CartColor.backgroundColor,
+                            fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ).onTap(() {
                           orderController.addCart(product: orderMapList, total: total.value);
