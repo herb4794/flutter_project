@@ -32,7 +32,7 @@ const subjectiveIdealism = [
 ];
 
 const profileButtonsList = [
-  orders, wishlist, message
+  orders, message
 ];
 
 const profileButtonsicon = [

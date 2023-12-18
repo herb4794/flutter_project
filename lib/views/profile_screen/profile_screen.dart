@@ -7,8 +7,10 @@ import 'package:flutter_application_1/consts/consts.dart';
 import 'package:flutter_application_1/consts/lists.dart';
 import 'package:flutter_application_1/controllers/auth_controller.dart';
 import 'package:flutter_application_1/controllers/cartController.dart';
+import 'package:flutter_application_1/controllers/fireCloud.dart';
 import 'package:flutter_application_1/controllers/profile_controller.dart';
 import 'package:flutter_application_1/views/auth_screen/login_screen.dart';
+import 'package:flutter_application_1/views/dashoard_screen/order_screen.dart';
 import 'package:flutter_application_1/views/profile_screen/components/details_card.dart';
 import 'package:flutter_application_1/views/profile_screen/edit_profile_screen.dart';
 import 'package:flutter_application_1/widgets_common/bg_widget.dart';
@@ -17,15 +19,20 @@ import 'package:get/get.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
-
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final cartControllerGetx = Get.put(CartController());
+  final fireCloud = FireCloud();
   List<Map<String, dynamic>>? productMapList;
   List<Map<String, dynamic>>? orderList;
+  List<Map<String, dynamic>>? getOrderList;
+  void fetchData() async {
+    getOrderList = await fireCloud.getOrder();
+    print(getOrderList);
+  }
   var controller;
   Map? existObj = {
     "name" : "",
@@ -36,14 +43,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   List productArr = [];
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
     productMapList = cartControllerGetx.getCartItemResult;
+    fetchData();
     auth.authStateChanges().listen((User? user)async {
       if (user != null)  {
         var existUser = await firestore.collection(usersCollection).doc(user.uid).get();
         var existUserData = existUser.data();
-
         setState(() {
           existObj?['name'] = existUserData!['name'].toString();
           existObj?['email'] = existUserData!['email'].toString();
@@ -55,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     });
-    print(orderList);
+    print(productMapList);
   }
 
   @override
@@ -137,7 +145,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-
                 10.heightBox,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -147,13 +154,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title: "in your cart",
                         width: context.screenWidth / 3.4),
                     detailsCard(
-                        count: 0,
-                        title: "in your wishlist",
-                        width: context.screenWidth / 3.4),
-                    detailsCard(
                         count:  productArr!.length,
                         title: "your orders",
-                        width: context.screenWidth / 3.4),
+                        width: context.screenWidth / 3.4)
                   ],
                 ),
 
@@ -168,16 +171,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   itemCount: profileButtonsList.length,
                   itemBuilder: (BuildContext context, index) {
-                    return ListTile(
+                    String itemText;
+                    String itemIcon;
+                    Function orderPage;
+                    switch (index){
+                      case 0:
+                        itemText = profileButtonsList[0];
+                        itemIcon =   profileButtonsicon[0];
+                        orderPage = () => Get.to(() => OrderScreen(orderList: getOrderList,));
+                        break;
+                      case 1:
+                        itemText = profileButtonsList[1];
+                        itemIcon =   profileButtonsicon[1];
+                        orderPage = () => {};
+                        break;
+                      default:
+                        itemText = '';
+                        itemIcon = '';
+                        orderPage = () => {};
+                    } return ListTile(
                       leading: Image.asset(
-                        profileButtonsicon[index],
+                        itemIcon,
                         width: 22,
                       ),
-                      title: profileButtonsList[index]
+                      title: itemText
                           .text
                           .fontFamily(semibold)
                           .color(darkFontGrey)
-                          .make(),
+                          .make().onTap(() => orderPage()),
                     );
                   },
                 )

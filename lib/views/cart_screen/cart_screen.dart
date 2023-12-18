@@ -72,7 +72,7 @@ class _CartScreenState extends State<CartScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
         ),
-        body: Center(
+        body:Center(
           child: Container(
             decoration: BoxDecoration(
               color: CartColor.backgroundColor,
@@ -84,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
             height: 600,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Column(
+              child:  total > 1 ?  Column(
                 children: [
                   Text("My Cart"),
                   const SizedBox(
@@ -149,7 +149,7 @@ class _CartScreenState extends State<CartScreen> {
                         ],
                       ),
                       // button
-                      Container(
+                 Container(
                         padding: EdgeInsets.all(15),
                         width: 100,
                         height: 50,
@@ -163,16 +163,26 @@ class _CartScreenState extends State<CartScreen> {
                             fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ).onTap(() {
+                          VxToast.show(context, msg: "Order Successfully",textSize: 12,showTime: 2000);
                           orderController.addCart(product: orderMapList, total: total.value);
+                          Future.delayed(Duration(seconds: 2)).then((value) {
+                            productMapList!.clear();
+                            updateTotal();
+                          });
+
                         }),
                       )
                     ],
                   )
                 ],
+              ) : const Center(
+                child: Text(
+                    "Your cart is empty",
+                    style: TextStyle(color: Colors.black),),
               ),
             ),
           ),
-        ),
+        ) ,
       ),
     );
   }

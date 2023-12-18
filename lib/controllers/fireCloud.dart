@@ -30,7 +30,7 @@ class FireCloud extends GetxController {
     });
   }
 
-  storingUserData({name, method, email, imageUrl}) async {
+   storingUserData({name, method, email, imageUrl}) async {
     firestore.collection(usersCollection).doc(currentUser!.uid).get().then((doc) {
       final data = doc.data() as Map<String, dynamic>;
       if(data != null){
@@ -42,7 +42,21 @@ class FireCloud extends GetxController {
             {'name': name, 'method': method, 'email': email, 'imageUrl': imageUrl, "orders" : []});
       }
     });
+  }
 
+  Future<List<Map<String, dynamic>>> getOrder () async{
+    List<Map<String, dynamic>> order = [];
+    final user = auth.currentUser;
+      if(user != null){
+        final docRef = firestore.collection(usersCollection).doc(user.uid);
+        final item = await docRef.get();
+        final data = item.data() as Map<String, dynamic>;
+        List orderReList = data['orders'].toList();
+        order.add(
+            {'product': orderReList}
+        );
+      }
+    return order;
   }
 
   // TODO upload product array to firestore
