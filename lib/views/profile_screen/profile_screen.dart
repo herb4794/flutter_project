@@ -29,6 +29,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   List<Map<String, dynamic>>? productMapList;
   List<Map<String, dynamic>>? orderList;
   List<Map<String, dynamic>>? getOrderList;
+
+  void orderRemove(index){
+    setState(() {
+      fireCloud.removeOrder(index: index);
+      // updateMethod();
+      // updateMethod(index);
+    });
+  }
+  // void updateMethod(index){
+  //   setState(() {
+  //     getOrderList![0]['product'][index].clear();
+  //   });
+  //   print(getOrderList![0]['product'][index]);
+  // }
   void fetchData() async {
     getOrderList = await fireCloud.getOrder();
     print(getOrderList);
@@ -178,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       case 0:
                         itemText = profileButtonsList[0];
                         itemIcon =   profileButtonsicon[0];
-                        orderPage = () => Get.to(() => OrderScreen(orderList: getOrderList,));
+                        orderPage = () => Get.to(() => OrderScreen(orderList: getOrderList,removeOrder: orderRemove,));
                         break;
                       case 1:
                         itemText = profileButtonsList[1];

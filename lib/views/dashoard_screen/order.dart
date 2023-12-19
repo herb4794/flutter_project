@@ -35,12 +35,12 @@ class Order extends StatelessWidget {
                         gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisExtent: 210,
+                            mainAxisExtent: 220,
                             mainAxisSpacing: 12,
                             crossAxisSpacing: 12),
                         itemBuilder: (context, index) {
                           return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image.network(
                                 arr[0][index]['image'].toString(),
@@ -63,9 +63,14 @@ class Order extends StatelessWidget {
                                   .text
                                   .color(redColor)
                                   .fontFamily(bold)
-                                  .size(16)
+                                  .size(14)
                                   .make(),
                               10.heightBox,
+                              "quantity: ${arr[0][index]['quantity'].toString()}"
+                              .text
+                              .color(Colors.black)
+                              .size(2)
+                              .make()
                             ],
                           )
                               .box
@@ -76,10 +81,7 @@ class Order extends StatelessWidget {
                               .padding(const EdgeInsets.all(12))
                               .make()
                               .onTap(() {
-                              final arr = product.map((item) {
-                                  return item[title];
-                               }).toList();
-                              print(arr[0][index]['image']);
+
                           });
                         }))
               ],
